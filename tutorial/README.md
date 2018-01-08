@@ -33,10 +33,100 @@ JavaScriptについて思い出す必要性を感じているなら、[このガ
 
 #### エディタで書く場合
 
+自分のマシンで設定して書くこともできます。
+
+注意: **これは完全に任意の項目です。このチュートリアルにおいて必須ではありません。**
+
+これは追加のタスクですが、慣れたエディターで作業をすすめることができるようになります。
+
+もしエディターでの作業がおこのみであれば、以下のステップで可能です。
+
+1. 新しい[Node.js](https://nodejs.org/ja/)のバージョンがインストールされていることを確認して下さい
+2. [installation instructions](https://reactjs.org/docs/add-react-to-a-new-app.html)に従って新しいプロジェクトを作成して下さい
+
+```
+$ npm install -g create-react-app
+$ create-react-app my-app
+```
+
+3. 新たなプロジェクトの`src/`ディレクトリ以下のファイルをすべて削除して下さい(中身だけでディレクトリそのものは消さないでください。)
+
+```
+$ cd my-app
+$ rm -f src/*
+```
+
+4. `src/`ディレクトリに[こちらのCSSのコード](https://codepen.io/gaearon/pen/oWWQNa?editors=0100)を入力した`index.css`という名前のファイルを作成してください。
+5. `src/`ディレクトリに[こちらのJSのコード](https://codepen.io/gaearon/pen/oWWQNa?editors=0010)を入力した`index.js`という名前のファイルを作成してください。
+6. `src/`ディレクトリの`index.js`の上部に次の3行を追加してください。
+
+```JavaScript
+import React from 'react';
+import React DOM from 'react-dom';
+import './index.css';
+```
+
+プロジェクトディレクトリ(my-app)にて`npm start`を走らせると、`http://localhost:3000`でブラウザが立ち上がり、○×ゲームのまっさらな状態が見えるでしょう。
+
+エディターのシンタックスハイライトを有効にするために、[以下のインストラクション](http://babeljs.io/docs/editors)に従うことをおすすめします。
+
 ### わからなくなった！たすけてくれ！
+
+ハマったときは、[コミュニティーのサポート]()をチェックしてみてください。特に、[Reactiflux chat]は素早くヘルプを得るための素晴らしい手段です。どちらでもいい回答を得られなかった場合は、issueを出してください。手助けすることができます。
+
+これで終わりです！さあ、始めましょう！
 
 <a name="overview"></a>
 
 ## 概要
 
 ### Reactとは？
+
+Reactはユーザーインターフェースを構築するための、宣言的で効率的で柔軟なJavaScriptライブラリです。
+
+Reactには幾つかの種類のコンポーネントがありますが、まずは`React.Component`のサブクラスから作成していきます。
+
+```JavaScript
+class ShoppingList extends React.Component {
+    render() {
+        return (
+            <div className="shopping-list">
+                <h1>Shopping List for {this.props.name}</h1>
+                <ul>
+                    <li>Instagram</li>
+                    <li>WhatsApp</li>
+                    <li>Oculus</li>
+                </ul>
+            </div>
+        );
+    }
+}
+
+// 利用例: <ShoppingList name="Mark">
+```
+
+おかしなXMLのようなタグがすぐに目につくでしょう。コンポーネントはReactに対し何かをレンダリングするように命令をします。すると、データに変更があったとき、Reactは効率的にアップデートされ、正しいコンポーネントをレンダリングします。
+
+ShoppingListは**Reactのコンポーネントクラス**、もしくは**Reactのコンポーネントの型**です。コンポーネントは`props`と呼ばれる引数と受取、`render`メソッドによってビューの階層構造を返却します。
+
+この`render`メソッドはなにをレンダリングしたいかということについての__記述__を返却します。そしてReactはその**記述**を受取りスクリーン上にレンダリングします。特に、`render`メソッドがレンダリングすべきものについての軽量な記述を**React element**と呼びます。この**React Element**を簡単に表現するのに、多くのReact開発者はJSXという特殊な文法を利用します。こちらの`<div />`という文法はビルド時に、`React.createElement('div')`というものに変換されます。以下にその実装の例をあげます。
+
+```JavaScript
+return React.createElement('div', {className: 'shopping-list'},
+    React.createElement('h1', /* ... h1 children ... */),
+    React.createElement('ul', /* ... ul children ... */),
+);
+```
+
+先程のShoppingListを`React.createElement`で記述したものが[こちら](https://babeljs.io/repl/#?presets=react&code_lz=DwEwlgbgBAxgNgQwM5IHIILYFMC8AiJACwHsAHUsAOwHMBaOMJAFzwD4AoKKYQgRg65cAyiXJVqUADKMmUAGbEATlADepRWSQA6SpiwBfTtwD0fAdwCucc12ANWASUrME1RZmDH7R2_YDqhAhMSACC5J7egtz2APIwVhZIEWDmnlYcnuAQrADc7EA)です。
+
+`createElement()`についてはより詳しく知りたい場合は、[APIリファレンス](https://reactjs.org/docs/react-api.html#createelement)により詳細があります。しかし、このチュートリアルでは直接的に使うことはありません。代わりにJSXを使っていきます。
+
+JSX中には中括弧を用いることでJavaScriptのすべての記述を入れることができます。それぞれのReact elementは実際、様々な変数を入れたり、プログラム中で使い回したりできるようなJavaScriptのオブジェクトです。
+
+`ShoppingList`コンポーネントはDOMコンポーネントのみをレンダリングしていますが、`<ShoppingList />`のように、カスタムReactコンポーネントとして組み合わせて簡単に記述することができます。それぞれのコンポーネントは独立に扱われるためにカプセル化されています。これにより、シンプルなコンポーネントを組み合わせて複雑なUIを構築することが可能となります。
+
+## さあ始めよう
+
+こちらの[Startar Code](https://codepen.io/gaearon/pen/oWWQNa?editors=0010)から始めましょう。
+
