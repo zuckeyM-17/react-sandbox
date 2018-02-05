@@ -1,0 +1,19 @@
+{
+  "name": "storybook-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "storybook": "start-storybook -p 9001 -c .storybook"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0"
+  },
+  "devDependencies": {
+    "@storybook/react": "^3.3.12",
+    "babel-core": "^6.26.0"
+  }
+}
