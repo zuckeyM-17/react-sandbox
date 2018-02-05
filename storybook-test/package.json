@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "prettify": "prettier --write **/*.js",
     "storybook": "start-storybook -p 9001 -c .storybook"
   },
   "author": "",
@@ -14,6 +15,7 @@
   },
   "devDependencies": {
     "@storybook/react": "^3.3.12",
-    "babel-core": "^6.26.0"
+    "babel-core": "^6.26.0",
+    "prettier": "^1.10.2"
   }
 }
