@@ -3,21 +3,26 @@ import logo from './logo.svg';
 import './App.css';
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      tasks: [
+        'hoge',
+        'fuga',
+        'piyo',
+      ],
+    };
+  }
   render() {
-    return (<TaskList />);
+    return (<TaskList tasks={ this.state.tasks }/>);
   }
 }
 
 class TaskList extends Component {
   render() {
-    const tasks = [
-      'hoge',
-      'fuga',
-      'piyo',
-    ];
     return (
     <ul>
-      { tasks.map(v => <TaskListItem value={ v } />) }
+      { this.props.tasks.map(v => <TaskListItem value={ v } />) }
     </ul>);
   }
 }
