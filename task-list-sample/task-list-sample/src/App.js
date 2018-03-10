@@ -4,13 +4,27 @@ import './App.css';
 
 class App extends Component {
   render() {
+    return (<TaskList />);
+  }
+}
+
+class TaskList extends Component {
+  render() {
+    const tasks = [
+      'hoge',
+      'fuga',
+      'piyo',
+    ];
     return (
-      <ul>
-        <li>hoge</li>
-        <li>fuga</li>
-        <li>piyo</li>
-      </ul>
-    );
+    <ul>
+      { tasks.map(v => <TaskListItem value={ v } />) }
+    </ul>);
+  }
+}
+
+class TaskListItem extends Component {
+  render() {
+    return (<li>{ this.props.value }</li>)
   }
 }
 
